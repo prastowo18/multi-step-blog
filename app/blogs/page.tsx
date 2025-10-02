@@ -1,16 +1,22 @@
-import { Suspense } from 'react';
-import { getAllBlog } from '../data/blogs/get-all';
-import { BlogCard, BlogsCardSkeleton } from './_components/BlogCard';
 import Link from 'next/link';
-import { buttonVariants } from '@/components/ui/button';
+import { Suspense } from 'react';
+
 import { Plus } from 'lucide-react';
+
+import { getAllBlog } from '../data/blogs/get-all';
+
+import { buttonVariants } from '@/components/ui/button';
+import { BlogCard, BlogsCardSkeleton } from './_components/BlogCard';
+
+import { NewAuthorModal } from './_components/AuthorModal';
+import { NewCategoryModal } from './_components/CategoryModal';
 
 export const dynamic = 'force-dynamic';
 
 export default function BlogsRoute() {
   return (
     <div className="mt-5">
-      <div className="flex items-center justify-between mb-10">
+      <div className="flex flex-col gap-5 mb-10">
         <div className="flex flex-col space-y-2">
           <h1 className="text-3xl md:text-4xl font-bold tracking-tight">
             Explore Blogs
@@ -20,15 +26,15 @@ export default function BlogsRoute() {
             your journey and spark new ideas.
           </p>
         </div>
-        <Link
-          href={'/blogs/create'}
-          className={buttonVariants({
-            variant: 'outline',
-          })}
-        >
-          <Plus className="size-4" />
-          Create Blog
-        </Link>
+
+        <div className="flex flex-col gap-2 xl:flex-row xl:items-center xl:gap-5">
+          <Link href={'/blogs/create'} className={buttonVariants({})}>
+            <Plus className="size-4" />
+            Create Blog
+          </Link>
+          <NewAuthorModal />
+          <NewCategoryModal />
+        </div>
       </div>
 
       <Suspense fallback={<LoadingSkeletonLayout />}>
